@@ -1,0 +1,12 @@
+node_modules
+
+# Build artifacts
+/gatsby-node.js
+
+# Misc.
+.DS_Store
+*.log
+
+# IDE
+.idea/
+*.sublime*

@@ -1,0 +1,38 @@
+{
+  "name": "@andrew-codes/gatsby-plugin-elasticlunr-search",
+  "version": "0.0.1",
+  "description": "Search for gatsby; implemented via elastic lunr.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nps",
+    "test": "nps test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-codes/gatsby-plugin-search.git"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "lunr",
+    "search",
+    "elastic lunr"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrew-codes/gatsby-plugin-search/issues"
+  },
+  "homepage": "https://github.com/andrew-codes/gatsby-plugin-search#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.32",
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
+    "@babel/preset-env": "^7.0.0-beta.32",
+    "nps": "^5.7.1"
+  },
+  "dependencies": {
+    "elasticlunr": "^0.9.5",
+    "graphql": "^0.11.7"
+  }
+}
