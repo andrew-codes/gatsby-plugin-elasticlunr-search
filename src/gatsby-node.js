@@ -37,8 +37,8 @@ const appendPage = ({
 };
 
 const createOrGetIndex = async (node, cache, getNode, server, {
-    bodyIsSearchable,
-    frontmatterSearchFields
+    fields,
+    resolvers,
 }) => {
     const cacheKey = `${node.id}:index`;
     const cached = await cache.get(cacheKey);
@@ -47,29 +47,25 @@ const createOrGetIndex = async (node, cache, getNode, server, {
     }
 
     const index = elasticlunr();
-    index.addField('title');
-    frontmatterSearchFields.forEach(index.addField);
-    if (bodyIsSearchable) {
-        index.addField('body');
-    }
     index.setRef('id');
+    fields.forEach(field => index.addField(field));
 
     for (const pageId of node.pages) {
-        const page = getNode(pageId);
-        const doc = {
-            id: page.id,
-            title: page.frontmatter.title,
-            date: page.date,
-            ...(bodyIsSearchable ? {
-                body: page.content,
-            } : {}),
-            ...frontmatterSearchFields.reduce((prev, field) => ({
-                ...prev,
-                [field]: page.frontmatter[field],
-            }), {}),
-        };
+        const pageNode = getNode(pageId);
+        const fieldResolvers = resolvers[pageNode.internal.type];
+        if (fieldResolvers) {
+            const doc = {
+                id: pageNode.id,
+                date: pageNode.date,
+                ...Object.keys(fieldResolvers)
+                    .reduce((prev, key) => ({
+                        ...prev,
+                        [key]: fieldResolvers[key](pageNode),
+                    }), {}),
+            };
 
-        index.addDoc(doc);
+            index.addDoc(doc);
+        }
     }
 
     const json = index.toJSON();
@@ -96,22 +92,19 @@ exports.onCreateNode = ({
                             boundActionCreators,
                             getNode,
                         }) => {
-    const {createNode} = boundActionCreators;
-    if (node.internal.type === `MarkdownRemark`) {
-        const searchIndex = getNode(SEARCH_INDEX_ID) || createEmptySearchIndexNode();
-        const newSearchIndex = appendPage(searchIndex, node.id);
-        createNode(newSearchIndex);
-    }
+    const {
+        createNode,
+    } = boundActionCreators;
+    const searchIndex = getNode(SEARCH_INDEX_ID) || createEmptySearchIndexNode();
+    const newSearchIndex = appendPage(searchIndex, node.id);
+    createNode(newSearchIndex);
 };
 
 exports.setFieldsOnGraphQLNodeType = ({
                                           type,
                                           getNode,
                                           cache
-                                      }, {
-                                          bodyIsSearchable,
-                                          frontmatterSearchFields,
-                                      }) => {
+                                      }, pluginOptions) => {
     if (type.name !== SEARCH_INDEX_TYPE) {
         return null;
     }
@@ -120,10 +113,7 @@ exports.setFieldsOnGraphQLNodeType = ({
         index: {
             type: SearchIndex,
             resolve: (node, _opts, _3, server) =>
-                createOrGetIndex(node, cache, getNode, server, {
-                    bodyIsSearchable: false,
-                    frontmatterSearchFields: [],
-                })
+                createOrGetIndex(node, cache, getNode, server, pluginOptions)
         },
     };
 };
