@@ -18,7 +18,7 @@
     "search",
     "elastic lunr"
   ],
-  "author": "",
+  "author": "Andrew Smith <andrew@andrew.codes>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/andrew-codes/gatsby-plugin-search/issues"
