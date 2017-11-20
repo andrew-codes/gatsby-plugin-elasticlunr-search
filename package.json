@@ -1,6 +1,6 @@
 {
   "name": "@andrew-codes/gatsby-plugin-elasticlunr-search",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Search for gatsby; implemented via elastic lunr.",
   "main": "index.js",
   "scripts": {
