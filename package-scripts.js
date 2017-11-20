@@ -1,4 +1,4 @@
-import {crossEnv} from 'nps';
+const {crossEnv} = require('nps');
 
 module.exports = {
     scripts: {
