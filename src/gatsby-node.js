@@ -91,7 +91,13 @@ exports.onCreateNode = ({
                             node,
                             boundActionCreators,
                             getNode,
+                        }, {
+                            resolvers,
                         }) => {
+    if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
+        return;
+    }
+
     const {
         createNode,
     } = boundActionCreators;
