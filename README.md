@@ -84,7 +84,9 @@ export default class Search extends Component {
             // Query the index with search string to get an [] of IDs
             results: this.index.search(query)
                 // Map over each ID and return the full document
-                .map(this.index.documentStore.getDoc),
+                .map(({
+                ref,
+                }) => this.index.documentStore.getDoc),
         });
     }
 }
