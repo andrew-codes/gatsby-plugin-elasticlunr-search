@@ -1,3 +1,6 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/124348de2ee6850d682f/maintainability)](https://codeclimate.com/github/andrew-codes/gatsby-plugin-elasticlunr-search/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7230ae7191f44a9489834553760310c2)](https://www.codacy.com/app/andrew-codes/gatsby-plugin-elasticlunr-search?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=andrew-codes/gatsby-plugin-elasticlunr-search&amp;utm_campaign=Badge_Grade)
+
 # Search Plugin for Gatsby
 This plugin enables search integration via elastic lunr. Content is indexed and then made available via graphql to rehydrate into an `elasticlunr` index. From there, queries can be made against this index to retrieve pages by their ID.
 
