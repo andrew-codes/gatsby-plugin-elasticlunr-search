@@ -1,6 +1,6 @@
-const crypto = require('crypto');
-const {GraphQLScalarType} = require('graphql');
-const elasticlunr = require('elasticlunr');
+const crypto = require(`crypto`);
+const {GraphQLScalarType} = require(`graphql`);
+const elasticlunr = require(`elasticlunr`);
 
 const SEARCH_INDEX_ID = `SearchIndex < Site`;
 const SEARCH_INDEX_TYPE = `SiteSearchIndex`;
@@ -15,9 +15,7 @@ const createEmptySearchIndexNode = () => ({
     pages: [],
 });
 
-const appendPage = ({
-                        pages,
-                    }, newPage) => {
+const appendPage = ({pages}, newPage) => {
     const newPages = [
         ...pages,
         newPage
@@ -47,7 +45,7 @@ const createOrGetIndex = async (node, cache, getNode, server, {
     }
 
     const index = elasticlunr();
-    index.setRef('id');
+    index.setRef(`id`);
     fields.forEach(field => index.addField(field));
 
     for (const pageId of node.pages) {
@@ -75,25 +73,21 @@ const createOrGetIndex = async (node, cache, getNode, server, {
 
 const SearchIndex = new GraphQLScalarType({
     name: `${SEARCH_INDEX_TYPE}_Index`,
-    description: 'Serialized elasticlunr search index',
+    description: `Serialized elasticlunr search index`,
     parseValue() {
-        throw new Error('Not supported');
+        throw new Error(`Not supported`);
     },
     serialize(value) {
         return value;
     },
     parseLiteral() {
-        throw new Error('Not supported');
+        throw new Error(`Not supported`);
     },
 });
 
-exports.onCreateNode = ({
-                            node,
-                            boundActionCreators,
-                            getNode,
-                        }, {
-                            resolvers,
-                        }) => {
+exports.onCreateNode = ({node, boundActionCreators, getNode}, {
+    resolvers,
+}) => {
     if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
         return;
     }
@@ -106,11 +100,7 @@ exports.onCreateNode = ({
     createNode(newSearchIndex);
 };
 
-exports.setFieldsOnGraphQLNodeType = ({
-                                          type,
-                                          getNode,
-                                          cache
-                                      }, pluginOptions) => {
+exports.setFieldsOnGraphQLNodeType = ({type, getNode, cache}, pluginOptions) => {
     if (type.name !== SEARCH_INDEX_TYPE) {
         return null;
     }
