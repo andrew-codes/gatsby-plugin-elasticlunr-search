@@ -58,11 +58,11 @@ export default class Search extends Component {
             results: [],
         };
     }
-    
+
     render() {
         return (
             <div>
-                <input type="text" value={this.state.query} onChange={search}/>
+                <input type="text" value={this.state.query} onChange={this.search}/>
                 <ul>
                     {this.state.results.map(page => (
                         <li>
@@ -73,12 +73,12 @@ export default class Search extends Component {
             </div>
         );
     }
-    
+
     getOrCreateIndex = () => this.index
         ? this.index
         // Create an elastic lunr index and hydrate with graphql query results
         : Index.load(this.props.data.siteSearchIndex.index);
-    
+
     search = (evt) => {
         const query = evt.target.value;
         this.index = this.getOrCreateIndex();
@@ -89,7 +89,7 @@ export default class Search extends Component {
                 // Map over each ID and return the full document
                 .map(({
                 ref,
-                }) => this.index.documentStore.getDoc),
+                }) => this.index.documentStore.getDoc(ref)),
         });
     }
 }
