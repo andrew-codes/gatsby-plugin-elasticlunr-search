@@ -5,8 +5,10 @@
 This plugin enables search integration via elastic lunr. Content is indexed and then made available via graphql to rehydrate into an `elasticlunr` index. From there, queries can be made against this index to retrieve pages by their ID.
 
 # Getting Started
-Install the plugin via `npm install -D @andrew-codes/gatsby-plugin-elasticlunr-search`. Next, update your `gatsby-config.js` file to utilize the plugin.
 
+Install the plugin via `npm install -D @andrew-codes/gatsby-plugin-elasticlunr-search`. See the [demo site repo](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search-demo) for more specific implementation details.
+
+Next, update your `gatsby-config.js` file to utilize the plugin.
 
 ## Setup in `gatsby-config`
 ```javascript
