@@ -40,7 +40,7 @@ module.exports = {
 The serialized search index will be available via graphql. Once queried, a component can create a new elastic lunr index with the value retrieved from the graphql query. Search queries can be made against the hydrated search index. The results is an array of document IDs. The index can return the full document given a document ID
 
 ```javascript
-import React, {Component} from 'React';
+import React, {Component} from 'react';
 import {Index} from 'elasticlunr';
 
 // Graphql query used to retrieve the serialized search index.
