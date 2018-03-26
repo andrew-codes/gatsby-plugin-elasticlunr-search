@@ -88,12 +88,12 @@ const SearchIndex = new GraphQLScalarType({
 exports.sourceNodes = async ({ getNodes, boundActionCreators }) => {
     const {
         touchNode,
-    } = boundActionCreators
+    } = boundActionCreators;
 
     const existingNodes = getNodes().filter(
         n => n.internal.owner === `@andrew-codes/gatsby-plugin-elasticlunr-search`
-    )
-    existingNodes.forEach(n => touchNode(n.id))
+    );
+    existingNodes.forEach(n => touchNode(n.id));
 };
 
 exports.onCreateNode = ({node, boundActionCreators, getNode}, {
