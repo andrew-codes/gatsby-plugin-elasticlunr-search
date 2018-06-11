@@ -98,10 +98,14 @@ exports.sourceNodes = async ({ getNodes, boundActionCreators }) => {
 
 exports.onCreateNode = ({node, boundActionCreators, getNode}, {
     resolvers,
+    filter,
 }) => {
     if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
         return;
     }
+
+    // allow user to not add nodes to the index based on props from the node
+    if (filter && !filter(node)) { return; }
 
     const {
         createNode,
