@@ -1,7 +1,8 @@
 {
-  "name": "@andrew-codes/gatsby-plugin-elasticlunr-search",
+  "name": "@tsimons/gatsby-plugin-elasticlunr-search",
   "version": "1.0.3",
-  "description": "Search for gatsby; implemented via elastic lunr.",
+  "description":
+    "Search for gatsby; implemented via elastic lunr. Forked from https://www.npmjs.com/package/@andrew-codes/gatsby-plugin-elasticlunr-search",
   "main": "index.js",
   "scripts": {
     "start": "nps",
@@ -11,19 +12,15 @@
     "type": "git",
     "url": "git+https://github.com/andrew-codes/gatsby-plugin-search.git"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "lunr",
-    "search",
-    "elastic lunr"
-  ],
-  "author": "Andrew Smith <andrew@andrew.codes>",
+  "keywords": ["gatsby", "gatsby-plugin", "lunr", "search", "elastic lunr"],
+  "author":
+    "TJ Simons <tjsimons@invisionapp.com>, Andrew Smith <andrew@andrew.codes>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/andrew-codes/gatsby-plugin-search/issues"
+    "url": "https://github.com/tsimons/gatsby-plugin-elasticlunr-search"
   },
-  "homepage": "https://github.com/andrew-codes/gatsby-plugin-search#readme",
+  "homepage":
+    "https://github.com/tsimons/gatsby-plugin-elasticlunr-search#readme",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.32",
     "@babel/core": "^7.0.0-beta.32",
