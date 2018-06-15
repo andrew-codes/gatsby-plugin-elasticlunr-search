@@ -105,7 +105,7 @@ exports.onCreateNode = ({node, boundActionCreators, getNode}, {
     }
 
     // allow user to not add nodes to the index based on props from the node
-    if (filter && !filter(node)) { return; }
+    if (filter && !filter(node, getNode)) { return; }
 
     const {
         createNode,
