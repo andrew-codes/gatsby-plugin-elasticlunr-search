@@ -1,6 +1,6 @@
 {
   "name": "@andrew-codes/gatsby-plugin-elasticlunr-search",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Search for gatsby; implemented via elastic lunr.",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,6 @@
     "nps-utils": "^1.5.0"
   },
   "dependencies": {
-    "elasticlunr": "^0.9.5",
-    "graphql": "^0.11.7"
+    "elasticlunr": "^0.9.5"
   }
 }
