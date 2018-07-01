@@ -35,5 +35,8 @@
   },
   "dependencies": {
     "elasticlunr": "^0.9.5"
+  },
+  "peerDependencies": {
+    "gatsby": ">2.0.0-alpha"
   }
 }

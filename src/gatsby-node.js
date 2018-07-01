@@ -50,6 +50,7 @@ const createOrGetIndex = async (node, cache, getNode, server, {
 
     for (const pageId of node.pages) {
         const pageNode = getNode(pageId);
+
         const fieldResolvers = resolvers[pageNode.internal.type];
         if (fieldResolvers) {
             const doc = {
@@ -99,6 +100,7 @@ exports.sourceNodes = async ({ getNodes, actions }) => {
 exports.onCreateNode = ({node, actions, getNode}, {
     resolvers,
 }) => {
+  
     if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
         return;
     }
