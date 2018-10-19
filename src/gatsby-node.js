@@ -1,5 +1,5 @@
 const crypto = require(`crypto`);
-const {GraphQLScalarType} = require(`graphql`);
+const {GraphQLScalarType} = require(`gatsby/graphql`);
 const elasticlunr = require(`elasticlunr`);
 
 const SEARCH_INDEX_ID = `SearchIndex < Site`;
@@ -50,6 +50,7 @@ const createOrGetIndex = async (node, cache, getNode, server, {
 
     for (const pageId of node.pages) {
         const pageNode = getNode(pageId);
+
         const fieldResolvers = resolvers[pageNode.internal.type];
         if (fieldResolvers) {
             const doc = {
@@ -85,27 +86,28 @@ const SearchIndex = new GraphQLScalarType({
     },
 });
 
-exports.sourceNodes = async ({ getNodes, boundActionCreators }) => {
+exports.sourceNodes = async ({ getNodes, actions }) => {
     const {
         touchNode,
-    } = boundActionCreators;
+    } = actions;
 
     const existingNodes = getNodes().filter(
-        n => n.internal.owner === `@andrew-codes/gatsby-plugin-elasticlunr-search`
+        n => n.internal.owner === `@gatsby-contrib/gatsby-plugin-elasticlunr-search`
     );
-    existingNodes.forEach(n => touchNode(n.id));
+    existingNodes.forEach(n => touchNode({nodeId: n.id}));
 };
 
-exports.onCreateNode = ({node, boundActionCreators, getNode}, {
+exports.onCreateNode = ({node, actions, getNode}, {
     resolvers,
 }) => {
+
     if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
         return;
     }
 
     const {
         createNode,
-    } = boundActionCreators;
+    } = actions;
     const searchIndex = getNode(SEARCH_INDEX_ID) || createEmptySearchIndexNode();
     const newSearchIndex = appendPage(searchIndex, node.id);
     createNode(newSearchIndex);
