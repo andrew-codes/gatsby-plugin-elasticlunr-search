@@ -92,7 +92,7 @@ exports.sourceNodes = async ({ getNodes, actions }) => {
     } = actions;
 
     const existingNodes = getNodes().filter(
-        n => n.internal.owner === `@andrew-codes/gatsby-plugin-elasticlunr-search`
+        n => n.internal.owner === `@gatsby-contrib/gatsby-plugin-elasticlunr-search`
     );
     existingNodes.forEach(n => touchNode({nodeId: n.id}));
 };
@@ -100,7 +100,7 @@ exports.sourceNodes = async ({ getNodes, actions }) => {
 exports.onCreateNode = ({node, actions, getNode}, {
     resolvers,
 }) => {
-  
+
     if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
         return;
     }
