@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "nps",
-    "test": "nps test"
   },
   "repository": {
     "type": "git",
@@ -28,13 +27,13 @@
   },
   "homepage": "https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "eslint": "^4.12.1",
-    "nps": "^5.7.1",
-    "nps-utils": "^1.5.0"
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "eslint": "^5.7.0",
+    "nps": "^5.9.3",
+    "nps-utils": "^1.7.0"
   },
   "dependencies": {
     "elasticlunr": "^0.9.5"
