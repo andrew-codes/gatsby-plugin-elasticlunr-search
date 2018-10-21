@@ -12,15 +12,17 @@ It is a fork of [gatsby-plugin-elasticlunr-search](https://github.com/andrew-cod
 
 # Getting Started
 
-Install the plugin via `npm install -D @gatsby-contrib/gatsby-plugin-elasticlunr-search`.
+Install the plugin via `npm install --save @gatsby-contrib/gatsby-plugin-elasticlunr-search`.
 
-<!--
-See the [demo site repo](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search-demo) for more specific implementation details. -->
+See the [example site](https://gatsby-contrib.github.io/gatsby-plugin-elasticlunr-search/) [code](./example) for more specific implementation details.
 
 Next, update your `gatsby-config.js` file to utilize the plugin.
 
 ## Setup in `gatsby-config`
 
+Here's an example for a site that create pages using markdown, in which you you'd like to allow search features for `title` and `tags` frontmatter entries.
+
+`gatsby-config.js`
 ```javascript
 module.exports = {
     plugins: [
@@ -29,15 +31,16 @@ module.exports = {
             options: {
                 // Fields to index
                 fields: [
-                    'title',
-                    'keywords',
+                    `title`,
+                    `tags`,
                 ],
-                // How to resolve each field's value for a supported node type
+                // How to resolve each field`s value for a supported node type
                 resolvers: {
-                    // For any node of type MarkdownRemark, list how to resolve the fields' values
+                    // For any node of type MarkdownRemark, list how to resolve the fields` values
                     MarkdownRemark: {
                         title: node => node.frontmatter.title,
-                        keywords: node => node.frontmatter.keywords,
+                        tags: node => node.frontmatter.tags,
+                        path: node => node.frontmatter.path,
                     },
                 },
             },
@@ -48,62 +51,98 @@ module.exports = {
 
 ## Consuming in Your Site
 
-The serialized search index will be available via graphql. Once queried, a component can create a new elastic lunr index with the value retrieved from the graphql query. Search queries can be made against the hydrated search index. The results is an array of document IDs. The index can return the full document given a document ID
+The serialized search index will be available via graphql. Once queried, a component can create a new elasticlunr index with the value retrieved from the graphql query. Search queries can be made against the hydrated search index. The results is an array of document IDs. The index can return the full document given a document ID.
 
+In gatsby-v2, it is possible to use graphql queries inside components using [`StaticQuery`](https://www.gatsbyjs.org/docs/static-query/).
+
+Suppose that you want to include the `Search` component inside an `Header` component. *(Of course, you could also query `siteSearchIndex` from `layout.js` component, and pass it down as prop to any component that need it.)*
+
+First, query the data with `StaticQuery` inside the `Header` component, and pass it as props to the `Search` component.
+
+`components/header.js`
 ```javascript
-import React, {Component} from 'react';
-import {Index} from 'elasticlunr';
+import React from 'react'
+import { StaticQuery, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 
-// Graphql query used to retrieve the serialized search index.
-export const query = graphql`query
-SearchIndexExampleQuery {
-    siteSearchIndex {
-      index
-    }
-}`;
+import Search from './search'
+
+const Header = () => (
+    <StaticQuery
+        query={graphql`
+            query SearchIndexQuery {
+                siteSearchIndex {
+                    index
+                }
+            }
+        `}
+        render={data => (
+            <header>
+                ... header stuff...
+                <Search searchIndex={data.siteSearchIndex.index} />
+            </header>
+        )}
+    />
+)
+
+export default Header
+```
+
+And then use the `searchIndex` inside your `Search` component.
+
+`components/search.js`
+```javascript
+import React, { Component } from 'react'
+import { Index } from 'elasticlunr'
 
 // Search component
 export default class Search extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             query: ``,
             results: [],
-        };
+        }
     }
 
     render() {
         return (
             <div>
-                <input type="text" value={this.state.query} onChange={this.search}/>
+                <input
+                    type="text"
+                    value={this.state.query}
+                    onChange={this.search}
+                />
                 <ul>
                     {this.state.results.map(page => (
-                        <li>
-                            {page.title}: {page.keywords.join(`,`)}
+                         <li key={page.id}>
+                            <Link to={'/' + page.path}>
+                                {page.title}
+                            </Link>
+                            {': ' + page.tags.join(`,`)}
                         </li>
                     ))}
                 </ul>
             </div>
-        );
+        )
     }
+    getOrCreateIndex = () =>
+        this.index
+            ? this.index
+            : // Create an elastic lunr index and hydrate with graphql query results
+              Index.load(this.props.searchIndex)
 
-    getOrCreateIndex = () => this.index
-        ? this.index
-        // Create an elastic lunr index and hydrate with graphql query results
-        : Index.load(this.props.data.siteSearchIndex.index);
-
-    search = (evt) => {
-        const query = evt.target.value;
-        this.index = this.getOrCreateIndex();
+    search = evt => {
+        const query = evt.target.value
+        this.index = this.getOrCreateIndex()
         this.setState({
             query,
             // Query the index with search string to get an [] of IDs
-            results: this.index.search(query)
+            results: this.index
+                .search(query)
                 // Map over each ID and return the full document
-                .map(({
-                ref,
-                }) => this.index.documentStore.getDoc(ref)),
-        });
+                .map(({ ref }) => this.index.documentStore.getDoc(ref)),
+        })
     }
 }
 ```

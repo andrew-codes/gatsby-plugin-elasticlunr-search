@@ -1,0 +1,37 @@
+{
+  "name": "gatsby-starter-default",
+  "description": "gatsby-plugin-elasticlunr-search example site",
+  "version": "1.0.0",
+  "author": "Benjamin Abel <dev.abel@laposte.net>",
+  "dependencies": {
+    "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^2.0.2",
+    "gatsby": "^2.0.19",
+    "gatsby-plugin-manifest": "^2.0.5",
+    "gatsby-plugin-offline": "^2.0.5",
+    "gatsby-plugin-react-helmet": "^3.0.0",
+    "gatsby-source-filesystem": "^2.0.5",
+    "gatsby-transformer-remark": "^2.1.8",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write '**/*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "gatsby build --prefix-paths && gh-pages -d public"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "prettier": "^1.14.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  }
+}
