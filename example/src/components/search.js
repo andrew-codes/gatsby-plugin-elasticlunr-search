@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Index } from 'elasticlunr'
 
 import { Link } from 'gatsby'
@@ -14,14 +15,11 @@ export default class Search extends Component {
     }
 
     render() {
-        console.log(this.state.results)
         return (
-            <div
-            >
+            <div>
                 <input
                     style={{
-                        position:'relative',
-                        
+                        position: `relative`,
                     }}
                     type="text"
                     placeholder="Type title words or tags"
@@ -30,17 +28,15 @@ export default class Search extends Component {
                 />
                 <ul
                     style={{
-                        position: 'absolute',
-                        backgroundColor: 'white',
-                        marginLeft: '0',
+                        position: `absolute`,
+                        backgroundColor: `white`,
+                        marginLeft: `0`,
                     }}
                 >
                     {this.state.results.map(page => (
                         <li key={page.id}>
-                            <Link to={'/' + page.path}>
-                                {page.title}
-                            </Link>
-                            {': ' + page.tags.join(`,`)}
+                            <Link to={`/` + page.path}>{page.title}</Link>
+                            {`: ` + page.tags.join(`,`)}
                         </li>
                     ))}
                 </ul>
@@ -52,7 +48,7 @@ export default class Search extends Component {
         this.index
             ? this.index
             : // Create an elastic lunr index and hydrate with graphql query results
-              Index.load(this.props.searchIndex)
+            Index.load(this.props.searchIndex)
 
     search = evt => {
         const query = evt.target.value
@@ -66,4 +62,8 @@ export default class Search extends Component {
                 .map(({ ref }) => this.index.documentStore.getDoc(ref)),
         })
     }
+}
+
+Search.propTypes = {
+    searchIndex: PropTypes.object
 }

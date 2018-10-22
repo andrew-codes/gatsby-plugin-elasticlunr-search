@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { StaticQuery, Link } from 'gatsby'
 import { graphql } from 'gatsby'
 
@@ -16,25 +18,25 @@ const Header = ({ siteTitle }) => (
         render={data => (
             <header
                 style={{
-                    background: 'rebeccapurple',
-                    marginBottom: '1.45rem',
+                    background: `rebeccapurple`,
+                    marginBottom: `1.45rem`,
                 }}
             >
                 <div
                     style={{
-                        margin: '0 auto',
+                        margin: `0 auto`,
                         maxWidth: 960,
-                        padding: '1.45rem 1.0875rem',
-                        display: 'flex',
-                        justifyContent: 'space-between',
+                        padding: `1.45rem 1.0875rem`,
+                        display: `flex`,
+                        justifyContent: `space-between`,
                     }}
                 >
                     <h1 style={{ margin: 0 }}>
                         <Link
                             to="/"
                             style={{
-                                color: 'white',
-                                textDecoration: 'none',
+                                color: `white`,
+                                textDecoration: `none`,
                             }}
                         >
                             {siteTitle}
@@ -46,5 +48,9 @@ const Header = ({ siteTitle }) => (
         )}
     />
 )
+
+Header.propTypes = {
+    siteTitle: PropTypes.string
+}
 
 export default Header

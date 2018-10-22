@@ -2,9 +2,16 @@
   "name": "@gatsby-contrib/gatsby-plugin-elasticlunr-search",
   "version": "2.0.2",
   "description": "Search for gatsby; implemented via elasticlunr.",
-  "main": "index.js",
+  "main": "n/a",
   "scripts": {
-    "start": "nps"
+    "build": "babel src --out-dir .",
+    "build:watch": "babel src --watch --out-dir .",
+    "default": "npm run build:watch",
+    "lint": "eslint ./",
+    "lint:fix": "eslint --fix ./",
+    "format": "prettier --write '**/*.{js,md,json}'",
+    "publish": "npm run lint && npm publish --access=public",
+    "test": "echo 'Error: no test specified' && exit 1"
   },
   "repository": {
     "type": "git",
@@ -31,9 +38,12 @@
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.7.0",
-    "nps": "^5.9.3",
-    "nps-utils": "^1.7.0"
+    "eslint-config-google": "^0.11.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.3"
   },
   "dependencies": {
     "elasticlunr": "^0.9.5"

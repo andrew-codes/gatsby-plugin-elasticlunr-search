@@ -1,31 +1,26 @@
 {
-    "env": {
+    "parser": "babel-eslint",
+    "extends": [
+        "google",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "prettier/react"
+    ],"env": {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "backtick"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "backtick"],
+        "semi": ["error", "never"]
     },
     "parserOptions": {
-        "ecmaVersion": 2017,
+        "ecmaVersion": 2016,
+        "sourceType": "module",
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
+            "jsx": true
         }
     }
 }
