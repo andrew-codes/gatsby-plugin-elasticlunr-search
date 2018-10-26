@@ -144,3 +144,30 @@ export default class Search extends Component {
     };
 }
 ```
+
+## Partial Searches
+
+If you want your search to include partial matches, for example if you had the following data:
+
+```javascript
+sku: ['ab21345', 'ab98765', 'abcdef12']
+```
+
+And wanted a search for "__*ab*__" to return all of those data, then you can simply include `{ expand: true }` as the second parameter to `this.index.search()` when setting the `results` state.
+
+Taking the above example implementation, adapt the `search` function in the `Search` component to the following:
+
+```javascript
+search = evt => {
+    const query = evt.target.value;
+    this.index = this.getOrCreateIndex();
+    this.setState({
+        query,
+        // Query the index with search string to get an [] of IDs
+        results: this.index
+            .search(query, { expand: true }) // Accept partial matches
+            // Map over each ID and return the full document
+            .map(({ ref }) => this.index.documentStore.getDoc(ref))
+    });
+};
+```
