@@ -8,8 +8,7 @@
     "build:watch": "babel src --watch --out-dir .",
     "default": "npm run build:watch",
     "lint": "eslint ./",
-    "lint:fix": "eslint --fix ./",
-    "format": "prettier --write '**/*.{js,md,json}'",
+    "format": "prettier-eslint --write '**/*.{js,md,json}'",
     "publish": "npm run lint && npm publish --access=public",
     "test": "echo 'Error: no test specified' && exit 1"
   },
@@ -43,7 +42,8 @@
     "eslint-config-google": "^0.11.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "prettier-eslint-cli": "^4.7.1"
   },
   "dependencies": {
     "elasticlunr": "^0.9.5"

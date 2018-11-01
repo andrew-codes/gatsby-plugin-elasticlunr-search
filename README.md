@@ -26,25 +26,25 @@ Here's an example for a site that create pages using markdown, in which you you'
 
 ```javascript
 module.exports = {
-    plugins: [
-        {
-            resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
-            options: {
-                // Fields to index
-                fields: [`title`, `tags`],
-                // How to resolve each field`s value for a supported node type
-                resolvers: {
-                    // For any node of type MarkdownRemark, list how to resolve the fields` values
-                    MarkdownRemark: {
-                        title: node => node.frontmatter.title,
-                        tags: node => node.frontmatter.tags,
-                        path: node => node.frontmatter.path
-                    }
-                }
-            }
-        }
-    ]
-};
+  plugins: [
+    {
+      resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+      options: {
+        // Fields to index
+        fields: [`title`, `tags`],
+        // How to resolve each field`s value for a supported node type
+        resolvers: {
+          // For any node of type MarkdownRemark, list how to resolve the fields` values
+          MarkdownRemark: {
+            title: node => node.frontmatter.title,
+            tags: node => node.frontmatter.tags,
+            path: node => node.frontmatter.path,
+          },
+        },
+      },
+    },
+  ],
+}
 ```
 
 ## Consuming in Your Site
@@ -60,31 +60,31 @@ First, query the data with `StaticQuery` inside the `Header` component, and pass
 `components/header.js`
 
 ```javascript
-import React from "react";
-import { StaticQuery, Link } from "gatsby";
-import { graphql } from "gatsby";
+import React from "react"
+import { StaticQuery, Link } from "gatsby"
+import { graphql } from "gatsby"
 
-import Search from "./search";
+import Search from "./search"
 
 const Header = () => (
-    <StaticQuery
-        query={graphql`
-            query SearchIndexQuery {
-                siteSearchIndex {
-                    index
-                }
-            }
-        `}
-        render={data => (
-            <header>
-                ... header stuff...
-                <Search searchIndex={data.siteSearchIndex.index} />
-            </header>
-        )}
-    />
-);
+  <StaticQuery
+    query={graphql`
+      query SearchIndexQuery {
+        siteSearchIndex {
+          index
+        }
+      }
+    `}
+    render={data => (
+      <header>
+        ... header stuff...
+        <Search searchIndex={data.siteSearchIndex.index} />
+      </header>
+    )}
+  />
+)
 
-export default Header;
+export default Header
 ```
 
 And then use the `searchIndex` inside your `Search` component.
@@ -92,56 +92,52 @@ And then use the `searchIndex` inside your `Search` component.
 `components/search.js`
 
 ```javascript
-import React, { Component } from "react";
-import { Index } from "elasticlunr";
+import React, { Component } from "react"
+import { Index } from "elasticlunr"
 
 // Search component
 export default class Search extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            query: ``,
-            results: []
-        };
+  constructor(props) {
+    super(props)
+    this.state = {
+      query: ``,
+      results: [],
     }
+  }
 
-    render() {
-        return (
-            <div>
-                <input
-                    type="text"
-                    value={this.state.query}
-                    onChange={this.search}
-                />
-                <ul>
-                    {this.state.results.map(page => (
-                        <li key={page.id}>
-                            <Link to={"/" + page.path}>{page.title}</Link>
-                            {": " + page.tags.join(`,`)}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
-    getOrCreateIndex = () =>
-        this.index
-            ? this.index
-            : // Create an elastic lunr index and hydrate with graphql query results
-              Index.load(this.props.searchIndex);
+  render() {
+    return (
+      <div>
+        <input type="text" value={this.state.query} onChange={this.search} />
+        <ul>
+          {this.state.results.map(page => (
+            <li key={page.id}>
+              <Link to={"/" + page.path}>{page.title}</Link>
+              {": " + page.tags.join(`,`)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  getOrCreateIndex = () =>
+    this.index
+      ? this.index
+      : // Create an elastic lunr index and hydrate with graphql query results
+        Index.load(this.props.searchIndex)
 
-    search = evt => {
-        const query = evt.target.value;
-        this.index = this.getOrCreateIndex();
-        this.setState({
-            query,
-            // Query the index with search string to get an [] of IDs
-            results: this.index
-                .search(query, {})
-                // Map over each ID and return the full document
-                .map(({ ref }) => this.index.documentStore.getDoc(ref))
-        });
-    };
+  search = evt => {
+    const query = evt.target.value
+    this.index = this.getOrCreateIndex()
+    this.setState({
+      query,
+      // Query the index with search string to get an [] of IDs
+      results: this.index
+        .search(query, {})
+        // Map over each ID and return the full document
+        .map(({ ref }) => this.index.documentStore.getDoc(ref)),
+    })
+  }
 }
 ```
 
@@ -150,24 +146,24 @@ export default class Search extends Component {
 If you want your search to include partial matches, for example if you had the following data:
 
 ```javascript
-sku: ['ab21345', 'ab98765', 'abcdef12']
+sku: ["ab21345", "ab98765", "abcdef12"]
 ```
 
-And wanted a search for "__*ab*__" to return all of those data, then you can simply include `{ expand: true }` as the second parameter to `this.index.search()` when setting the `results` state.
+And wanted a search for "**_ab_**" to return all of those data, then you can simply include `{ expand: true }` as the second parameter to `this.index.search()` when setting the `results` state.
 
 Taking the above example implementation, adapt the `search` function in the `Search` component to the following:
 
 ```javascript
 search = evt => {
-    const query = evt.target.value;
-    this.index = this.getOrCreateIndex();
-    this.setState({
-        query,
-        // Query the index with search string to get an [] of IDs
-        results: this.index
-            .search(query, { expand: true }) // Accept partial matches
-            // Map over each ID and return the full document
-            .map(({ ref }) => this.index.documentStore.getDoc(ref))
-    });
-};
+  const query = evt.target.value
+  this.index = this.getOrCreateIndex()
+  this.setState({
+    query,
+    // Query the index with search string to get an [] of IDs
+    results: this.index
+      .search(query, { expand: true }) // Accept partial matches
+      // Map over each ID and return the full document
+      .map(({ ref }) => this.index.documentStore.getDoc(ref)),
+  })
+}
 ```
