@@ -12,12 +12,14 @@ const md5 = src =>
     .update(src)
     .digest(`hex`)
 
-const createEmptySearchIndexNode = () => {return {
-  id: SEARCH_INDEX_ID,
-  parent,
-  children: [],
-  pages: [],
-}}
+const createEmptySearchIndexNode = () => {
+  return {
+    id: SEARCH_INDEX_ID,
+    parent,
+    children: [],
+    pages: [],
+  }
+}
 
 const appendPage = ({ pages }, newPage) => {
   const newPages = [...pages, newPage]
@@ -60,13 +62,12 @@ const createOrGetIndex = async (
       const doc = {
         id: pageNode.id,
         date: pageNode.date,
-        ...Object.keys(fieldResolvers).reduce(
-          (prev, key) => {return {
+        ...Object.keys(fieldResolvers).reduce((prev, key) => {
+          return {
             ...prev,
             [key]: fieldResolvers[key](pageNode),
-          }},
-          {}
-        ),
+          }
+        }, {}),
       }
 
       index.addDoc(doc)
