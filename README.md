@@ -201,4 +201,4 @@ reslovers : {
   }
 }
 ```
-Now you can use the `featuredImage` data of `BlogPost` model without including all `Asset` models in the `elasticlunr` index.
+Now you can use the `featuredImage` data of `BlogPost` model without including all `Asset` models in the `elasticlunr` index [(see PR #3 for more details)](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/pull/3).
