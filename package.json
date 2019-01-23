@@ -9,6 +9,7 @@
     "default": "npm run build:watch",
     "lint": "eslint ./",
     "format": "prettier-eslint --write '**/*.{js,md,json}'",
+    "prepublish": "npm run build",
     "publish": "npm run lint && npm publish --access=public",
     "test": "echo 'Error: no test specified' && exit 1"
   },
