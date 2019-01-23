@@ -65,7 +65,7 @@ const createOrGetIndex = async (
         ...Object.keys(fieldResolvers).reduce((prev, key) => {
           return {
             ...prev,
-            [key]: fieldResolvers[key](pageNode),
+            [key]: fieldResolvers[key](pageNode, getNode),
           }
         }, {}),
       }
