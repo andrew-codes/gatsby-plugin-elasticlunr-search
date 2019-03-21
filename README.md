@@ -172,7 +172,7 @@ search = evt => {
 
 There are times when you have a data model that has nested nodes. Example resolver configuration in `gatsby-config.js`:
 ```
-reslovers : {
+resolvers : {
   // For any node of BlogPost, list how to resolve the fields' values
   BlogPost : {
     title         : node => node.title,
@@ -193,7 +193,7 @@ to the [setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#set
 with a data model node id it will return a node with all it's data. The above example of the `BlogPost` model with the nested `featuredImage` property of
 type `Asset` then becomes:
 ```
-reslovers : {
+resolvers : {
   // For any node of BlogPost, list how to resolve the fields' values
   BlogPost : {
     title         : node => node.title,
