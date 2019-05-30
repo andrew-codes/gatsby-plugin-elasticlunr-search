@@ -41,6 +41,9 @@ module.exports = {
             path: node => node.frontmatter.path,
           },
         },
+        // Optional filter to limit indexed nodes
+        filter: (node, getNode) =>
+          node.frontmatter.tags !== 'exempt',
       },
     },
   ],
