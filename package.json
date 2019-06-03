@@ -1,6 +1,6 @@
 {
   "name": "@gatsby-contrib/gatsby-plugin-elasticlunr-search",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Search for gatsby; implemented via elasticlunr.",
   "main": "n/a",
   "scripts": {
