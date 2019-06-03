@@ -102,10 +102,12 @@ exports.sourceNodes = async ({ getNodes, actions }) => {
   existingNodes.forEach(n => touchNode({ nodeId: n.id }))
 }
 
-exports.onCreateNode = ({ node, actions, getNode }, { resolvers }) => {
+exports.onCreateNode = ({ node, actions, getNode }, { resolvers, filter }) => {
   if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
     return
   }
+  
+  if (filter && !filter(node, getNode)) { return; }
 
   const { createNode } = actions
   const searchIndex = getNode(SEARCH_INDEX_ID) || createEmptySearchIndexNode()
