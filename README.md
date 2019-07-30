@@ -64,8 +64,7 @@ First, query the data with `StaticQuery` inside the `Header` component, and pass
 
 ```javascript
 import React from "react"
-import { StaticQuery, Link } from "gatsby"
-import { graphql } from "gatsby"
+import { StaticQuery, Link, graphql } from "gatsby"
 
 import Search from "./search"
 
