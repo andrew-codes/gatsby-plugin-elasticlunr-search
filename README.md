@@ -64,7 +64,7 @@ First, query the data with `StaticQuery` inside the `Header` component, and pass
 
 ```javascript
 import React from "react"
-import { StaticQuery, Link, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 import Search from "./search"
 
@@ -96,6 +96,7 @@ And then use the `searchIndex` inside your `Search` component.
 ```javascript
 import React, { Component } from "react"
 import { Index } from "elasticlunr"
+import { Link } from "gatsby"
 
 // Search component
 export default class Search extends Component {
