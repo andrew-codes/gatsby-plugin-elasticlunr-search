@@ -41,6 +41,8 @@ const createOrGetIndex = async (
   node,
   cache,
   getNode,
+  getNodesByType, 
+  getNodes,
   server,
   { fields, resolvers }
 ) => {
@@ -65,7 +67,7 @@ const createOrGetIndex = async (
         ...Object.keys(fieldResolvers).reduce((prev, key) => {
           return {
             ...prev,
-            [key]: fieldResolvers[key](pageNode, getNode),
+            [key]: fieldResolvers[key](pageNode, getNode, getNodesByType, getNodes),
           }
         }, {}),
       }
@@ -116,7 +118,7 @@ exports.onCreateNode = ({ node, actions, getNode }, { resolvers, filter }) => {
 }
 
 exports.setFieldsOnGraphQLNodeType = (
-  { type, getNode, cache },
+  { type, getNode, getNodesByType, getNodes, cache },
   pluginOptions
 ) => {
   if (type.name !== SEARCH_INDEX_TYPE) {
@@ -127,7 +129,7 @@ exports.setFieldsOnGraphQLNodeType = (
     index: {
       type: SearchIndex,
       resolve: (node, _opts, _3, server) =>
-        createOrGetIndex(node, cache, getNode, server, pluginOptions),
+        createOrGetIndex(node, cache, getNode, getNodesByType, getNodes, server, pluginOptions),
     },
   }
 }

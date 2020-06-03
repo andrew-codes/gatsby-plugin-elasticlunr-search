@@ -205,3 +205,19 @@ resolvers : {
 }
 ```
 Now you can use the `featuredImage` data of `BlogPost` model without including all `Asset` models in the `elasticlunr` index [(see PR #3 for more details)](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/pull/3).
+
+
+You can now also resolve the gatsby store with ``getNodesByType`` and ``getNodes``
+so the full signature of node resolving is this:
+```
+(node, getNode, getNodesByType, getNodes)
+```
+Documentation of all node helpers:
+
+- [getNode](https://www.gatsbyjs.org/docs/node-api-helpers/#getNode)
+- [getNodesByType](https://www.gatsbyjs.org/docs/node-api-helpers/#getNodesByType)
+- [getNodes](https://www.gatsbyjs.org/docs/node-api-helpers/#getNodes)
+
+
+
+
