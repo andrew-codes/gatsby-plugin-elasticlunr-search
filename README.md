@@ -42,8 +42,7 @@ module.exports = {
           },
         },
         // Optional filter to limit indexed nodes
-        filter: (node, getNode) =>
-          node.frontmatter.tags !== 'exempt',
+        filter: (node, getNode) => node.frontmatter.tags !== "exempt",
       },
     },
   ],
@@ -174,6 +173,7 @@ search = evt => {
 ## Optimize handling of data models with nested nodes
 
 There are times when you have a data model that has nested nodes. Example resolver configuration in `gatsby-config.js`:
+
 ```
 resolvers : {
   // For any node of BlogPost, list how to resolve the fields' values
@@ -188,6 +188,7 @@ resolvers : {
   }
 }
 ```
+
 The problem with the above resolvers configuration is that it will include all Asset models in the `elasticlunr` index,
 potentially bloating the `elasticlunr` index and leading to large bundle sizes and slower page load times.
 
@@ -195,6 +196,7 @@ The solution is to make use of the second paramater passed to each field resolve
 to the [setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) node api method and when called
 with a data model node id it will return a node with all it's data. The above example of the `BlogPost` model with the nested `featuredImage` property of
 type `Asset` then becomes:
+
 ```
 resolvers : {
   // For any node of BlogPost, list how to resolve the fields' values
@@ -204,20 +206,18 @@ resolvers : {
   }
 }
 ```
+
 Now you can use the `featuredImage` data of `BlogPost` model without including all `Asset` models in the `elasticlunr` index [(see PR #3 for more details)](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/pull/3).
 
-
-You can now also resolve the gatsby store with ``getNodesByType`` and ``getNodes``
+You can now also resolve the gatsby store with `getNodesByType` and `getNodes`
 so the full signature of node resolving is this:
+
 ```
 (node, getNode, getNodesByType, getNodes)
 ```
+
 Documentation of all node helpers:
 
 - [getNode](https://www.gatsbyjs.org/docs/node-api-helpers/#getNode)
 - [getNodesByType](https://www.gatsbyjs.org/docs/node-api-helpers/#getNodesByType)
 - [getNodes](https://www.gatsbyjs.org/docs/node-api-helpers/#getNodes)
-
-
-
-
