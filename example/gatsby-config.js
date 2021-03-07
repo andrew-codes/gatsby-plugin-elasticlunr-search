@@ -4,7 +4,6 @@ module.exports = {
   },
   pathPrefix: `/gatsby-plugin-elasticlunr-search`,
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
