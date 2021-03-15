@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Benjamin Abel <dev.abel@laposte.net>",
   "dependencies": {
-    "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^2.4.2",
+    "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^3.0.0",
     "gatsby": "^3.0.0",
     "gatsby-source-filesystem": "^3.0.0",
     "gatsby-transformer-remark": "^3.0.0",
