@@ -49,10 +49,6 @@
     "elasticlunr": "^0.9.5"
   },
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha",
-    "react": "^16.4.2"
-  },
-  "engines": {
-    "node": ">=10.13.0"
+    "gatsby": ">3.0.0"
   }
 }
