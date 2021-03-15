@@ -6,21 +6,29 @@
 
 # Search Plugin for Gatsby
 
-This plugin enables search integration via elastic lunr. Content is indexed and then made available via graphql to rehydrate into an `elasticlunr` index. From there, queries can be made against this index to retrieve pages by their ID.
+This plugin enables search integration via elastic lunr. Content is indexed and
+then made available via graphql to rehydrate into an `elasticlunr` index. From
+there, queries can be made against this index to retrieve pages by their ID.
 
-It is a fork of [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search) made in order to use the plugin with gatsby-v2.
+It is a fork of
+[gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
+made in order to use the plugin with gatsby-v2.
 
 # Getting Started
 
-Install the plugin via `npm install --save @gatsby-contrib/gatsby-plugin-elasticlunr-search`.
+Install the plugin via `npm install --save
+@gatsby-contrib/gatsby-plugin-elasticlunr-search`.
 
-See the [example site](https://gatsby-contrib.github.io/gatsby-plugin-elasticlunr-search/) [code](./example) for more specific implementation details.
+See the [example
+site](https://gatsby-contrib.github.io/gatsby-plugin-elasticlunr-search/)
+[code](./example) for more specific implementation details.
 
 Next, update your `gatsby-config.js` file to utilize the plugin.
 
 ## Setup in `gatsby-config`
 
-Here's an example for a site that create pages using markdown, in which you you'd like to allow search features for `title` and `tags` frontmatter entries.
+Here's an example for a site that create pages using markdown, in which you
+you'd like to allow search features for `title` and `tags` frontmatter entries.
 
 `gatsby-config.js`
 
@@ -51,13 +59,21 @@ module.exports = {
 
 ## Consuming in Your Site
 
-The serialized search index will be available via graphql. Once queried, a component can create a new elasticlunr index with the value retrieved from the graphql query. Search queries can be made against the hydrated search index. The results is an array of document IDs. The index can return the full document given a document ID.
+The serialized search index will be available via graphql. Once queried, a
+component can create a new elasticlunr index with the value retrieved from the
+graphql query. Search queries can be made against the hydrated search index. The
+results is an array of document IDs. The index can return the full document
+given a document ID.
 
-In gatsby-v2, it is possible to use graphql queries inside components using [`StaticQuery`](https://www.gatsbyjs.org/docs/static-query/).
+In gatsby-v2, it is possible to use graphql queries inside components using
+[`StaticQuery`](https://www.gatsbyjs.org/docs/static-query/).
 
-Suppose that you want to include the `Search` component inside an `Header` component. _(Of course, you could also query `siteSearchIndex` from `layout.js` component, and pass it down as prop to any component that need it.)_
+Suppose that you want to include the `Search` component inside an `Header`
+component. _(Of course, you could also query `siteSearchIndex` from `layout.js`
+component, and pass it down as prop to any component that need it.)_
 
-First, query the data with `StaticQuery` inside the `Header` component, and pass it as props to the `Search` component.
+First, query the data with `StaticQuery` inside the `Header` component, and pass
+it as props to the `Search` component.
 
 `components/header.js`
 
@@ -145,15 +161,19 @@ export default class Search extends Component {
 
 ## Partial Searches
 
-If you want your search to include partial matches, for example if you had the following data:
+If you want your search to include partial matches, for example if you had the
+following data:
 
 ```javascript
 sku: ["ab21345", "ab98765", "abcdef12"]
 ```
 
-And wanted a search for "**_ab_**" to return all of those data, then you can simply include `{ expand: true }` as the second parameter to `this.index.search()` when setting the `results` state.
+And wanted a search for "**_ab_**" to return all of those data, then you can
+simply include `{ expand: true }` as the second parameter to
+`this.index.search()` when setting the `results` state.
 
-Taking the above example implementation, adapt the `search` function in the `Search` component to the following:
+Taking the above example implementation, adapt the `search` function in the
+`Search` component to the following:
 
 ```javascript
 search = evt => {
@@ -172,7 +192,8 @@ search = evt => {
 
 ## Optimize handling of data models with nested nodes
 
-There are times when you have a data model that has nested nodes. Example resolver configuration in `gatsby-config.js`:
+There are times when you have a data model that has nested nodes. Example
+resolver configuration in `gatsby-config.js`:
 
 ```
 resolvers : {
@@ -189,13 +210,17 @@ resolvers : {
 }
 ```
 
-The problem with the above resolvers configuration is that it will include all Asset models in the `elasticlunr` index,
-potentially bloating the `elasticlunr` index and leading to large bundle sizes and slower page load times.
+The problem with the above resolvers configuration is that it will include all
+Asset models in the `elasticlunr` index, potentially bloating the `elasticlunr`
+index and leading to large bundle sizes and slower page load times.
 
-The solution is to make use of the second paramater passed to each field resolver function called `getNode`. `getNode` is the same function provided by gatsby
-to the [setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType) node api method and when called
-with a data model node id it will return a node with all it's data. The above example of the `BlogPost` model with the nested `featuredImage` property of
-type `Asset` then becomes:
+The solution is to make use of the second paramater passed to each field
+resolver function called `getNode`. `getNode` is the same function provided by
+gatsby to the
+[setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType)
+node api method and when called with a data model node id it will return a node
+with all it's data. The above example of the `BlogPost` model with the nested
+`featuredImage` property of type `Asset` then becomes:
 
 ```
 resolvers : {
@@ -207,7 +232,9 @@ resolvers : {
 }
 ```
 
-Now you can use the `featuredImage` data of `BlogPost` model without including all `Asset` models in the `elasticlunr` index [(see PR #3 for more details)](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/pull/3).
+Now you can use the `featuredImage` data of `BlogPost` model without including
+all `Asset` models in the `elasticlunr` index [(see PR #3 for more
+details)](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/pull/3).
 
 You can now also resolve the gatsby store with `getNodesByType` and `getNodes`
 so the full signature of node resolving is this:
