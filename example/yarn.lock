@@ -1023,10 +1023,8 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@gatsby-contrib/gatsby-plugin-elasticlunr-search@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@gatsby-contrib/gatsby-plugin-elasticlunr-search/-/gatsby-plugin-elasticlunr-search-3.0.0.tgz#95781767d9a408fba68df7e9251fe61ecba7ef93"
-  integrity sha512-JxN+HkW1x/++cXlVOpy/khPryIbooSDpRmrh40fTchhTC6QemhlMpmluebRrLeOeO0ltcf+DKJ3mnBDVW68ZMw==
+"@gatsby-contrib/gatsby-plugin-elasticlunr-search@../":
+  version "3.0.1"
   dependencies:
     elasticlunr "^0.9.5"
 
