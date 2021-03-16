@@ -2,6 +2,7 @@ node_modules
 
 # Build artifacts
 /gatsby-node.js
+example/.cache/
 
 # Misc.
 .DS_Store
@@ -10,3 +11,4 @@ node_modules
 # IDE
 .idea/
 *.sublime*
+*.sh

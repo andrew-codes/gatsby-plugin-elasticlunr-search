@@ -2,4 +2,10 @@ src
 .babelrc
 .editorconfig
 .gitattributes
+.prettierrc
+.prettierignore
+.eslintrc
+.eslintignore
+index.js
 package-scripts.js
+example/

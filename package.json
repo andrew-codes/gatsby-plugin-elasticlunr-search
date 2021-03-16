@@ -1,15 +1,21 @@
 {
-  "name": "@andrew-codes/gatsby-plugin-elasticlunr-search",
-  "version": "1.0.3",
-  "description": "Search for gatsby; implemented via elastic lunr.",
-  "main": "index.js",
+  "name": "@gatsby-contrib/gatsby-plugin-elasticlunr-search",
+  "version": "3.0.2",
+  "description": "Search for gatsby; implemented via elasticlunr.",
+  "main": "gatsby-node.js",
   "scripts": {
-    "start": "nps",
-    "test": "nps test"
+    "build": "babel src --out-dir .",
+    "build:watch": "babel src --watch --out-dir .",
+    "default": "npm run build:watch",
+    "lint": "eslint ./src",
+    "format": "prettier-eslint --write '**/*.{js,md,json}'",
+    "prepare": "npm run build",
+    "publish": "npm run lint && npm publish --access=public",
+    "test": "echo 'Error: no test specified' && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrew-codes/gatsby-plugin-search.git"
+    "url": "git+https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search.git"
   },
   "keywords": [
     "gatsby",
@@ -19,22 +25,30 @@
     "elastic lunr"
   ],
   "author": "Andrew Smith <andrew@andrew.codes>",
+  "contributors": [
+    "Benjamin Abel"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/andrew-codes/gatsby-plugin-search/issues"
+    "url": "https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search/issues"
   },
-  "homepage": "https://github.com/andrew-codes/gatsby-plugin-search#readme",
+  "homepage": "https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "eslint": "^4.12.1",
-    "nps": "^5.7.1",
-    "nps-utils": "^1.5.0"
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-gatsby-package": "^0.4.4",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.11.0",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-react": "^7.20.0",
+    "prettier": "^1.19.1",
+    "prettier-eslint-cli": "^4.7.1"
   },
   "dependencies": {
-    "elasticlunr": "^0.9.5",
-    "graphql": "^0.11.7"
+    "elasticlunr": "^0.9.5"
+  },
+  "peerDependencies": {
+    "gatsby": ">3.0.0"
   }
 }
